@@ -1,0 +1,12 @@
+../Core/Src/driver/modbus_rtu.c:80:10:crc16	24	static
+../Core/Src/driver/modbus_rtu.c:98:6:process_data	8	static
+../Core/Src/driver/modbus_rtu.c:142:6:sendData	24	static
+../Core/Src/driver/modbus_rtu.c:158:6:modbusException	16	static
+../Core/Src/driver/modbus_rtu.c:170:9:readHoldingRegs	24	static
+../Core/Src/driver/modbus_rtu.c:209:9:readInputRegs	24	static
+../Core/Src/driver/modbus_rtu.c:248:9:readCoils	40	static
+../Core/Src/driver/modbus_rtu.c:314:9:readInputs	40	static
+../Core/Src/driver/modbus_rtu.c:380:9:writeHoldingRegs	24	static
+../Core/Src/driver/modbus_rtu.c:424:9:writeSingleReg	16	static
+../Core/Src/driver/modbus_rtu.c:456:9:writeSingleCoil	24	static
+../Core/Src/driver/modbus_rtu.c:503:9:writeMultiCoils	40	static

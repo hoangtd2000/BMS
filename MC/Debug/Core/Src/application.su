@@ -1,0 +1,16 @@
+../Drivers/CMSIS/Include/core_cm4.h:1938:34:__NVIC_SystemReset	4	static,ignoring_inline_asm
+../Core/Src/application.c:75:6:application_init	8	static
+../Core/Src/application.c:97:6:Try_go_home	8	static
+../Core/Src/application.c:125:6:Handle_popup	16	static
+../Core/Src/application.c:135:6:Handle_main	16	static
+../Core/Src/application.c:144:6:Handle_motor	16	static
+../Core/Src/application.c:153:6:Handle_setting	4	static
+../Core/Src/application.c:158:6:Handle_reset	4	static
+../Core/Src/application.c:162:6:Handle_start	8	static
+../Core/Src/application.c:167:6:Handle_stop	4	static
+../Core/Src/application.c:171:6:Popup_handle_next	4	static
+../Core/Src/application.c:177:6:Popup_handle_stop	4	static
+../Core/Src/application.c:183:6:task_timer6	8	static
+../Core/Src/application.c:197:6:task_timer7	8	static
+../Core/Src/application.c:213:6:application_run_main	4	static
+../Core/Src/application.c:227:6:HAL_GPIO_EXTI_Callback	16	static

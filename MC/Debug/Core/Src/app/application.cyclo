@@ -1,0 +1,5 @@
+../Core/Src/app/application.c:24:6:application_init	2
+../Core/Src/app/application.c:45:6:Try_go_home	6
+../Core/Src/app/application.c:150:6:application_run_main	2
+../Core/Src/app/application.c:180:6:task_timer6	1
+../Core/Src/app/application.c:184:6:task_timer7	1
