@@ -152,7 +152,7 @@ void Handle_output(void){
 	uint32_t changed = current ^ output_shadow;
 	    if(changed == 0)
 	        return;
-	    for(uint8_t i = 0; i < 18; i++)
+	    for(uint8_t i = 0; i < 8; i++)
 	    {
 	        if(changed & (1UL << i))
 	        {
@@ -170,6 +170,7 @@ void Handle_output(void){
 }
 
 void Handle_homeprocess(void){
+	if((AxisX.mode == STOP) &&(AxisY.mode == STOP) && (AxisZ.mode == STOP)){
 		Input_indicator->bits.motor_state = NOT_YET;
 		Input_indicator->bits.home_state = NOT_YET;
 
@@ -196,10 +197,11 @@ void Handle_homeprocess(void){
 		Home_process_y();
 		wait_handler_stop();
 	}
+}
 
 void Handle_setpoint(void){
 	Motor_control->bits.Set_point = 0 ;
-	if(AxisX.mode == STOP && AxisY.mode == STOP && AxisZ.mode == STOP ){
+	if((AxisX.mode == STOP) &&(AxisY.mode == STOP) && (AxisZ.mode == STOP)){
 	move_axis(Get_PC_Position_Axis_X(),Get_PC_Position_Axis_Y(), Get_PC_Position_Axis_Z());
 	}
 }

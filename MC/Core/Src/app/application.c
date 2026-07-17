@@ -27,7 +27,7 @@ void application_init(){
 		HAL_TIM_Base_Start_IT(&htim5); //x
 		HAL_TIM_Base_Start_IT(&htim9); //y
 		HAL_TIM_Base_Start_IT(&htim2); //z
-		HAL_TIM_Base_Start_IT(&htim6); // kiem tra hmi
+	//	HAL_TIM_Base_Start_IT(&htim6); // kiem tra hmi
 		HAL_TIM_Base_Start_IT(&htim7); // kiem tra trang thai x, y, z
 		Set_Speed_Motor_x( speed_default, speed_x_max);
 		Set_Speed_Motor_y( speed_default, speed_y_max);
@@ -42,33 +42,34 @@ void application_init(){
 
 }
 void Try_go_home(){
-	Input_indicator->bits.home_state = 1;
-	Input_indicator->bits.motor_state = 0;
+	Handle_homeprocess();
+	// Input_indicator->bits.home_state = 1;
+	// Input_indicator->bits.motor_state = 0;
 
-	  if(get_home_z() == home_z){
-		  AxisZ.mode = MOVE_HOME2;
-	  }else {
-		  AxisZ.mode = MOVE_HOME1;
-	  }
-	  Home_process_z();
-		while((AxisZ.mode != MOVE_HOME3));
-		while((AxisZ.mode != STOP));
+	//   if(get_home_z() == home_z){
+	// 	  AxisZ.mode = MOVE_HOME2;
+	//   }else {
+	// 	  AxisZ.mode = MOVE_HOME1;
+	//   }
+	//   Home_process_z();
+	// 	while((AxisZ.mode != MOVE_HOME3));
+	// 	while((AxisZ.mode != STOP));
 
 
-	  if(get_home_x() == home_x){
-		  AxisX.mode = MOVE_HOME2;
-	  }else{
-		  AxisX.mode = MOVE_HOME1;
-	  }
-	  Home_process_x();
+	//   if(get_home_x() == home_x){
+	// 	  AxisX.mode = MOVE_HOME2;
+	//   }else{
+	// 	  AxisX.mode = MOVE_HOME1;
+	//   }
+	//   Home_process_x();
 
-	  if(get_home_y() == home_y){
-		  AxisY.mode = MOVE_HOME2;
-	  }else{
-		  AxisY.mode = MOVE_HOME1;
-	  }
-	  Home_process_y();
-	  wait_handler_stop();
+	//   if(get_home_y() == home_y){
+	// 	  AxisY.mode = MOVE_HOME2;
+	//   }else{
+	// 	  AxisY.mode = MOVE_HOME1;
+	//   }
+	//   Home_process_y();
+	//   wait_handler_stop();
 }
 
 void application_run_main(void){
@@ -77,12 +78,14 @@ void application_run_main(void){
 			activeTransport = MODBUS_NONE;
 		}
 	}
+	Handle_motor();
+	Handle_output();
 }
 
 
 void task_timer6(){
-	Handle_motor();
-	Handle_output();
+//	Handle_motor();
+//	Handle_output();
 }
 void task_timer7(){
 	Control_motor_y();

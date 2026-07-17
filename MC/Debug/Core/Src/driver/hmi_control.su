@@ -19,10 +19,10 @@
 ../Core/Src/driver/hmi_control.c:138:6:Handle_motor	16	static
 ../Core/Src/driver/hmi_control.c:150:6:Handle_output	24	static
 ../Core/Src/driver/hmi_control.c:172:6:Handle_homeprocess	8	static
-../Core/Src/driver/hmi_control.c:200:6:Handle_setpoint	16	static
-../Core/Src/driver/hmi_control.c:207:6:Handle_X_Left	8	static
-../Core/Src/driver/hmi_control.c:216:6:Handle_X_Right	16	static
-../Core/Src/driver/hmi_control.c:226:6:Handle_Y_Forward	16	static
-../Core/Src/driver/hmi_control.c:235:6:Handle_Y_Backward	8	static
-../Core/Src/driver/hmi_control.c:244:6:Handle_Z_Up	8	static
-../Core/Src/driver/hmi_control.c:253:6:Handle_Z_Down	16	static
+../Core/Src/driver/hmi_control.c:202:6:Handle_setpoint	16	static
+../Core/Src/driver/hmi_control.c:209:6:Handle_X_Left	8	static
+../Core/Src/driver/hmi_control.c:218:6:Handle_X_Right	16	static
+../Core/Src/driver/hmi_control.c:228:6:Handle_Y_Forward	16	static
+../Core/Src/driver/hmi_control.c:237:6:Handle_Y_Backward	8	static
+../Core/Src/driver/hmi_control.c:246:6:Handle_Z_Up	8	static
+../Core/Src/driver/hmi_control.c:255:6:Handle_Z_Down	16	static

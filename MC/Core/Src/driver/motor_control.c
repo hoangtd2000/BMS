@@ -39,17 +39,17 @@ Axis_t AxisZ = {
 
 
 void Set_Speed_Motor_x(uint16_t f, uint16_t f_max){
-	if(f > f_max) f = f_max;
+	if((f <= 0)||(f > f_max)) f = f_max;
 	set_speed_x(period_x/f);
 	set_pulse_x(period_x/f/2);
 }
 void Set_Speed_Motor_y(uint16_t f, uint16_t f_max){
-	if(f > f_max) f = f_max;
+	if((f <= 0)||(f > f_max)) f = f_max;
 	set_speed_y(period_y/f);
 	set_pulse_y(period_y/f/2);
 }
 void Set_Speed_Motor_z(uint16_t f, uint16_t f_max){
-	if(f > f_max) f = f_max;
+	if((f <= 0)||(f > f_max)) f = f_max;
 	set_speed_z(period_z/f);
 	set_pulse_z(period_z/f/2);
 }

@@ -1,6 +1,6 @@
-../Core/Src/driver/motor_control.c:41:6:Set_Speed_Motor_x	2
-../Core/Src/driver/motor_control.c:46:6:Set_Speed_Motor_y	2
-../Core/Src/driver/motor_control.c:51:6:Set_Speed_Motor_z	2
+../Core/Src/driver/motor_control.c:41:6:Set_Speed_Motor_x	3
+../Core/Src/driver/motor_control.c:46:6:Set_Speed_Motor_y	3
+../Core/Src/driver/motor_control.c:51:6:Set_Speed_Motor_z	3
 ../Core/Src/driver/motor_control.c:58:6:excute_move_x_left	1
 ../Core/Src/driver/motor_control.c:62:6:excute_move_x_right	1
 ../Core/Src/driver/motor_control.c:66:6:excute_move_y_forward	1
