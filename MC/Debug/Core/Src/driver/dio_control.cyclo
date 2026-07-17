@@ -1,4 +1,0 @@
-../Core/Src/driver/dio_control.c:19:6:SetBips	1
-../Core/Src/driver/dio_control.c:23:6:BipControl	10
-../Core/Src/driver/dio_control.c:54:6:SetPickRubber	2
-../Core/Src/driver/dio_control.c:65:6:SetReleaseRubber	2
