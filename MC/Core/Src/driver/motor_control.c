@@ -146,7 +146,7 @@ void move_axis(uint16_t xd, uint16_t yd, uint16_t zd)
     if (dx > 1 && AxisX.mode == STOP) {
         Set_Speed_Motor_x(Axiscommand->speed_x, speed_x_max);
         AxisX.mode = MOVE_AUTO;
-        Set_PC_State_Axis_X(AxisX.mode);
+     //   Set_PC_State_Axis_X(AxisX.mode);
         if (AxisX.current_pos > xd) {
             move_x_left(dx);
         } else {
@@ -159,7 +159,7 @@ void move_axis(uint16_t xd, uint16_t yd, uint16_t zd)
     if (dy > 1 && AxisY.mode == STOP) {
         Set_Speed_Motor_y(Axiscommand->speed_y, speed_y_max);
         AxisY.mode = MOVE_AUTO;
-        Set_PC_State_Axis_Y(AxisY.mode);
+    //    Set_PC_State_Axis_Y(AxisY.mode);
         if (AxisY.current_pos > yd) {
             move_y_backward(dy);
         } else {
@@ -171,8 +171,8 @@ void move_axis(uint16_t xd, uint16_t yd, uint16_t zd)
     uint16_t dz = abs_diff_u16(AxisZ.current_pos, zd);
     if (dz > 1 && AxisZ.mode == STOP) {
         Set_Speed_Motor_z(Axiscommand->speed_z,speed_z_max);
-        AxisZ.mode = MOVE_AUTO;
-        Set_PC_State_Axis_Z(AxisZ.mode);
+       AxisZ.mode = MOVE_AUTO;
+    //    Set_PC_State_Axis_Z(AxisZ.mode);
         if (AxisZ.current_pos > zd) {
             move_z_up(dz);
         } else {
