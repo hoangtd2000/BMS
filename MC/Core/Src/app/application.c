@@ -23,7 +23,6 @@ extern  Motor_control_t* Motor_control;
 
 void application_init(){
 		HAL_Delay(7000);
-		while(get_estop());
 		HAL_UARTEx_ReceiveToIdle_DMA(&huart2, RxData, 256);
 		HAL_TIM_Base_Start_IT(&htim5); //x
 		HAL_TIM_Base_Start_IT(&htim9); //y
@@ -43,142 +42,46 @@ void application_init(){
 
 }
 void Try_go_home(){
-	Input_indicator->bits.motor_busy = 1;
-	Input_indicator->bits.home_done = 0;
+	Input_indicator->bits.home_state = 1;
+	Input_indicator->bits.motor_state = 0;
 
 	  if(get_home_z() == home_z){
 		  AxisZ.mode = MOVE_HOME2;
-		  //	case MOVE_HOME1:
-		  //		Set_Speed_Motor_z(speed_home1_z, speed_z_max);
-		  //		// cộng thêm tránh trường hợp đi từ max vào
-		  //		move_z_up(max_z + 1000);
-		  //		break;
-		  //	case MOVE_HOME2:
-		  //		if( get_counter_timer_slave_z() == 0 ){
-		  		Set_Speed_Motor_z(speed_home2_z, speed_z_max);
-		  		move_z_down(2500);
-		  //		}
-		  //		break;
 	  }else {
 		  AxisZ.mode = MOVE_HOME1;
-		  //	case MOVE_HOME1:
-		  		Set_Speed_Motor_z(speed_home1_z, speed_z_max);
-		  		// cộng thêm tránh trường hợp đi từ max vào
-		  		move_z_up(max_z + 1000);
-		  //		break;
-		  //	case MOVE_HOME2:
-		  //		if( get_counter_timer_slave_z() == 0 ){
-		  //		Set_Speed_Motor_z(speed_home2_z, speed_z_max);
-		  //		move_z_down(2500);
-		  //		}
-		  //		break;
 	  }
+	  Home_process_z();
 		while((AxisZ.mode != MOVE_HOME3));
 		while((AxisZ.mode != STOP));
 
 
 	  if(get_home_x() == home_x){
 		  AxisX.mode = MOVE_HOME2;
-
-
-		  //	case MOVE_HOME1:
-		  //		Set_Speed_Motor_x(speed_home1_x, speed_x_max);
-		  //		move_x_left(max_x+1000);
-		  //		break;
-		  //	case MOVE_HOME2:
-		  //		if( get_counter_timer_slave_x() == 0 ){
-		  		Set_Speed_Motor_x(speed_home2_x, speed_x_max);
-		  		move_x_right(2000);
-		  //		}
-		  //		break;
-
 	  }else{
 		  AxisX.mode = MOVE_HOME1;
-
-		  //	case MOVE_HOME1:
-		  		Set_Speed_Motor_x(speed_home1_x, speed_x_max);
-		  		move_x_left(max_x+1000);
-		  //		break;
-		  //	case MOVE_HOME2:
-		  //		if( get_counter_timer_slave_x() == 0 ){
-		  //		Set_Speed_Motor_x(speed_home2_x, speed_x_max);
-		  //		move_x_right(2000);
-		  //		}
-		  //		break;
-
-
-
 	  }
-
-
-
+	  Home_process_x();
 
 	  if(get_home_y() == home_y){
 		  AxisY.mode = MOVE_HOME2;
-
-
-//case MOVE_HOME1:
-//		Set_Speed_Motor_y(speed_home1_y, speed_y_max);
-//		move_y_backward(max_y + 500);
-//		break;
-//	case MOVE_HOME2:
-//		if( get_counter_timer_slave_y() == 0 ){
-		Set_Speed_Motor_y(speed_home2_y, speed_y_max);
-		move_y_forward(2000);
-//		}
-//		break;
-
-
 	  }else{
 		  AxisY.mode = MOVE_HOME1;
-		  //case MOVE_HOME1:
-		  		Set_Speed_Motor_y(speed_home1_y, speed_y_max);
-		  		move_y_backward(max_y + 500);
-		  //		break;
-		  //	case MOVE_HOME2:
-		  //		if( get_counter_timer_slave_y() == 0 ){
-		  //		Set_Speed_Motor_y(speed_home2_y, speed_y_max);
-		  //		move_y_forward(2000);
-		  //		}
-		  //		break;
 	  }
+	  Home_process_y();
 	  wait_handler_stop();
-//		Input_indicator->bits.motor_busy = 0;
-//		Input_indicator->bits.home_done = 1;
 }
 
 void application_run_main(void){
-//	  if(Timer_Check(0, 500)){
-//		  OFF_LED_RED;
-//	//	  OFF_BUZZ;
-//		  TOGGLE_LED_GREEN;
-//	  }
-//	  else if(Timer_Check(2, 500)  && SystemFlag.is_err){
-//		  OFF_LED_GREEN;
-//		  TOGGLE_LED_RED;
-//		//  TOGGLE_BUZZ;
-//	  }
-//	if(AxisX.mode == STOP && AxisY.mode == STOP && AxisZ.mode == STOP ){
-//		Input_indicator->bits.home_done = 1 ;
-//		Input_indicator->bits.motor_busy = 0 ;
-//	}
 	if(activeTransport!=MODBUS_NONE){
 		if(Tick- lastFrameTime >=0 ){
 			activeTransport = MODBUS_NONE;
 		}
 	}
-//	if(AxisX.mode ==MOVE_MANUAL ){
-//			if((Motor_control->bits.x_left == 0 ) && (Motor_control->bits.x_right == 0 )){
-//				if(get_counter_timer_x() >= get_pulse_x() ){
-//				Stop_motor_x();
-//				}
-//			}
-//	}
 }
 
 
 void task_timer6(){
-	Handle_main();
+	Handle_motor();
 	Handle_output();
 }
 void task_timer7(){

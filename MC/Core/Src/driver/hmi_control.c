@@ -8,11 +8,11 @@
 
 #include "hmi_control.h"
 
-Motor_control_t* Motor_control = (Motor_control_t*)&Coils_Database[0];
-Input_indicator_t* Input_indicator = (Input_indicator_t*) &Inputs_Database[0];
-Axisfeedback_t* Axisfeedback = (Axisfeedback_t*)&Input_Registers_Database[0];
-Axiscommand_t* Axiscommand =  (Axiscommand_t*)&Holding_Registers_Database[0];
-Output_control_t* Output_control = (Output_control_t*)&Coils_Database[2];
+Motor_control_t* Motor_control 		= (Motor_control_t*)&Coils_Database[0];
+Output_control_t* Output_control 	= (Output_control_t*)&Coils_Database[1];
+Input_indicator_t* Input_indicator 	= (Input_indicator_t*) &Inputs_Database[0];
+Axisfeedback_t* Axisfeedback 		= (Axisfeedback_t*)&Input_Registers_Database[0];
+Axiscommand_t* Axiscommand 			= (Axiscommand_t*)&Holding_Registers_Database[0];
 
 typedef struct {
     GPIO_TypeDef* port;
@@ -20,7 +20,7 @@ typedef struct {
 } OutputMap_t;
 
 
-OutputMap_t output_map[18] = {
+OutputMap_t output_map[8] = {
     {O1_GPIO_Port, O1_Pin},
 	{O2_GPIO_Port, O2_Pin},
 	{O3_GPIO_Port, O3_Pin},
@@ -29,16 +29,6 @@ OutputMap_t output_map[18] = {
 	{O6_GPIO_Port, O6_Pin},
 	{O7_GPIO_Port, O7_Pin},
 	{O8_GPIO_Port, O8_Pin},
-	{O9_GPIO_Port, O9_Pin},
-	{O10_GPIO_Port, O10_Pin},
-	{O11_GPIO_Port, O11_Pin},
-	{O12_GPIO_Port, O12_Pin},
-	{O13_GPIO_Port, O13_Pin},
-	{O14_GPIO_Port, O14_Pin},
-	{O15_GPIO_Port, O15_Pin},
-	{O16_GPIO_Port, O16_Pin},
-	{O17_GPIO_Port, O17_Pin},
-	{O18_GPIO_Port, O18_Pin},
 };
 
 
@@ -52,22 +42,14 @@ volatile SystemFlag_t SystemFlag={
 };
 
 ActionHandler_t Tab_main_table[] =  {
-    	 Handle_gohome  ,
+    	 Handle_homeprocess  ,
          Handle_setpoint,
-         Handle_estop 	,
-         Handle_restart ,
-         Handle_stop ,
-		 Handle_reserve,
-		 Handle_reserve,
-		 Handle_reserve,
 		 Handle_X_Left,
 		 Handle_X_Right,
 		 Handle_Y_Backward,
 		 Handle_Y_Forward,
 		 Handle_Z_Up,
 		 Handle_Z_Down,
-		 Handle_reserve,
-		 Handle_reserve,
 };
 
  void Set_PC_Position_Axis_X(uint16_t value){
@@ -110,33 +92,55 @@ uint16_t Get_PC_Speed_Axis_Z(void){
 }
 
 void Set_PC_State_Axis_X(uint16_t value){
-	Axisfeedback->state_x = value;
+	if(value == 0 ){
+		Axisfeedback->state_x = DONE;
+	}else{
+		Axisfeedback->state_x = NOT_YET;
+	}
 }
 void Set_PC_State_Axis_Y(uint16_t value){
-	Axisfeedback->state_y = value;
+	if(value == 0 ){
+		Axisfeedback->state_y = DONE;
+	}else{
+		Axisfeedback->state_y = NOT_YET;
+	}
 }
 void Set_PC_State_Axis_Z(uint16_t value){
-	Axisfeedback->state_z = value;
+	if(value == 0 ){
+		Axisfeedback->state_z = DONE;
+	}else{
+		Axisfeedback->state_z = NOT_YET;
+	}
 }
-uint16_t Get_PC_Maxspeed_Axis_X(void){
-	return (Axiscommand->maxspeed_x );
+uint16_t Get_PC_Limit_Axis_X(void){
+
+	if((Axiscommand->limit_x <= max_x/2)||(Axiscommand->limit_x  >= max_x)){
+		Axiscommand->limit_x =  max_x;
+	}
+	return (Axiscommand->limit_x );
 }
-uint16_t Get_PC_Maxspeed_Axis_Y(void){
-	return (Axiscommand->maxspeed_y );
+uint16_t Get_PC_Limit_Axis_Y(void){
+	if((Axiscommand->limit_y <= max_y/2)||(Axiscommand->limit_y  >= max_y)){
+		Axiscommand->limit_y =  max_y;
+	}
+	return (Axiscommand->limit_y );
 }
-uint16_t Get_PC_Maxspeed_Axis_Z(void){
-	return (Axiscommand->maxspeed_z );
+uint16_t Get_PC_Limit_Axis_Z(void){
+	if((Axiscommand->limit_z <= max_z/2)||(Axiscommand->limit_z  >= max_z)){
+		Axiscommand->limit_z =  max_z;
+	}
+	return (Axiscommand->limit_z );
 }
 
 
 
 // taskbar
-void Handle_main(void){
-	uint16_t builtin_Handle_main = __builtin_ffs(Motor_control->all);
-		if (builtin_Handle_main > 0) {
-			builtin_Handle_main -= 1;
-		    if (builtin_Handle_main < (int)(sizeof(Tab_main_table) / sizeof(Tab_main_table[0]))) {
-		    	Tab_main_table[builtin_Handle_main]();
+void Handle_motor(void){
+	uint16_t builtin_Handle_motor = __builtin_ffs(Motor_control->all);
+		if (builtin_Handle_motor > 0) {
+			builtin_Handle_motor -= 1;
+		    if (builtin_Handle_motor < (int)(sizeof(Tab_main_table) / sizeof(Tab_main_table[0]))) {
+		    	Tab_main_table[builtin_Handle_motor]();
 		    }
 		}
 }
@@ -165,82 +169,39 @@ void Handle_output(void){
 	    output_shadow = current;
 }
 
+void Handle_homeprocess(void){
+		Input_indicator->bits.motor_state = NOT_YET;
+		Input_indicator->bits.home_state = NOT_YET;
 
+		if(get_home_z() == home_z){
+		  AxisZ.mode = MOVE_HOME2;
+		}else {
+		  AxisZ.mode = MOVE_HOME1;
+		}
+		Home_process_z();
+		while((AxisZ.mode != MOVE_HOME3));
+		while((AxisZ.mode != STOP));
 
-void Handle_reset(void){
-}
-void Handle_start(void){
-}
-void Handle_stop(void){
-}
-
-void Handle_gohome(void){
-
-
-	if(AxisX.mode == STOP && AxisY.mode == STOP && AxisZ.mode == STOP ){
-		 Input_indicator->bits.motor_busy = 1;
-		Input_indicator->bits.home_done = 0;
-		  if(get_home_z() == home_z){
-			  AxisZ.mode = MOVE_HOME2;
-			  		Set_Speed_Motor_z(speed_home2_z, speed_z_max);
-			  		move_z_down(2500);
-		  }else {
-			  AxisZ.mode = MOVE_HOME1;
-			  		Set_Speed_Motor_z(speed_home1_z, speed_z_max);
-			  		// cộng thêm tránh trường hợp đi từ max vào
-			  		move_z_up(max_z + 1000);
-		  }
-		  		while((AxisZ.mode != MOVE_HOME3));
-		  		while((AxisZ.mode != STOP));
-		  if(get_home_x() == home_x){
-			  AxisX.mode = MOVE_HOME2;
-			  		Set_Speed_Motor_x(speed_home2_x, speed_x_max);
-			  		move_x_right(2000);
-		  }else{
-			  AxisX.mode = MOVE_HOME1;
-
-
-			  		Set_Speed_Motor_x(speed_home1_x, speed_x_max);
-			  		move_x_left(max_x+1000);
-		  }
-
-		  if(get_home_y() == home_y){
-			  AxisY.mode = MOVE_HOME2;
-
-			  		Set_Speed_Motor_y(speed_home2_y, speed_y_max);
-			  		move_y_forward(2000);
-		  }else{
-			  AxisY.mode = MOVE_HOME1;
-
-			  		Set_Speed_Motor_y(speed_home1_y, speed_y_max);
-			  		move_y_backward(max_y + 500);
-		  }
-
-
-
-		  wait_handler_stop();
-
-//			Input_indicator->bits.motor_busy = 0;
-//			Input_indicator->bits.home_done = 1;
+		if(get_home_x() == home_x){
+		  AxisX.mode = MOVE_HOME2;
+		}else{
+		  AxisX.mode = MOVE_HOME1;
+		}
+		Home_process_x();
+		if(get_home_y() == home_y){
+		  AxisY.mode = MOVE_HOME2;
+		}else{
+		  AxisY.mode = MOVE_HOME1;
+		}
+		Home_process_y();
+		wait_handler_stop();
 	}
-}
 
 void Handle_setpoint(void){
-	Motor_control->bits.setpoint = 0 ;
-	//wait_handler_stop();
+	Motor_control->bits.Set_point = 0 ;
 	if(AxisX.mode == STOP && AxisY.mode == STOP && AxisZ.mode == STOP ){
 	move_axis(Get_PC_Position_Axis_X(),Get_PC_Position_Axis_Y(), Get_PC_Position_Axis_Z());
 	}
-}
-
-void Handle_estop(void){
-
-}
-void Handle_restart(void){
-
-}
-void Handle_reserve(void){
-
 }
 
 void Handle_X_Left (void){
@@ -253,22 +214,22 @@ void Handle_X_Left (void){
 		}
 }
 void Handle_X_Right (void){
-	if(AxisX.current_pos >= max_x){
+	if(AxisX.current_pos >= Get_PC_Limit_Axis_X()){
 		return;
 	}
 	if(AxisX.mode == STOP) {
 	  AxisX.mode =  MOVE_MANUAL;
-	  move_x_right(max_x - AxisX.current_pos);
+	  move_x_right(Get_PC_Limit_Axis_X() - AxisX.current_pos);
 	}
 
 }
 void Handle_Y_Forward(void){
-	if(AxisY.current_pos >= max_y) {
+	if(AxisY.current_pos >= Get_PC_Limit_Axis_Y()) {
 		return;
 		}
 	if(AxisY.mode == STOP){
 		AxisY.mode = MOVE_MANUAL;
-		move_y_forward(max_y- AxisY.current_pos);
+		move_y_forward(Get_PC_Limit_Axis_Y()- AxisY.current_pos);
 	}
 }
 void Handle_Y_Backward(void){
@@ -290,14 +251,13 @@ void Handle_Z_Up(void){
 	}
 }
 void Handle_Z_Down(void){
-	if(AxisZ.current_pos >=max_z  ){
+	if(AxisZ.current_pos >=Get_PC_Limit_Axis_Z()  ){
 			return ;
 		}
 	if(AxisZ.mode == STOP) {
 		AxisZ.mode = MOVE_MANUAL;
-		move_z_down(max_z-AxisZ.current_pos);
+		move_z_down(Get_PC_Limit_Axis_Z()-AxisZ.current_pos);
 	}
-
 }
 
 

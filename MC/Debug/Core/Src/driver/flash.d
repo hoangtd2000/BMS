@@ -1,5 +1,5 @@
 Core/Src/driver/flash.o: ../Core/Src/driver/flash.c \
- C:/Users/MCNEX/Desktop/MC/Core/Inc/driver/flash.h \
+ C:/Users/Admin/Desktop/BMS/MC/Core/Inc/driver/flash.h \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h \
  ../Core/Inc/stm32f4xx_hal_conf.h \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_rcc.h \
@@ -31,7 +31,7 @@ Core/Src/driver/flash.o: ../Core/Src/driver/flash.c \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pcd.h \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_usb.h \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pcd_ex.h
-C:/Users/MCNEX/Desktop/MC/Core/Inc/driver/flash.h:
+C:/Users/Admin/Desktop/BMS/MC/Core/Inc/driver/flash.h:
 ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h:
 ../Core/Inc/stm32f4xx_hal_conf.h:
 ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_rcc.h:

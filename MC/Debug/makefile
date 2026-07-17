@@ -72,8 +72,8 @@ all: main-build
 main-build: MC_start.elf secondary-outputs
 
 # Tool invocations
-MC_start.elf MC_start.map: $(OBJS) $(USER_OBJS) C:\Users\MCNEX\Desktop\MC\STM32F407VETX_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
-	arm-none-eabi-gcc -o "MC_start.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m4 -T"C:\Users\MCNEX\Desktop\MC\STM32F407VETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="MC_start.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+MC_start.elf MC_start.map: $(OBJS) $(USER_OBJS) C:\Users\Admin\Desktop\BMS\MC\STM32F407VETX_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
+	arm-none-eabi-gcc -o "MC_start.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m4 -T"C:\Users\Admin\Desktop\BMS\MC\STM32F407VETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="MC_start.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
 	@echo 'Finished building target: $@'
 	@echo ' '
 

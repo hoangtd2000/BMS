@@ -32,12 +32,9 @@
 #define get_home_x()				HAL_GPIO_ReadPin(i1_home_x_GPIO_Port, i1_home_x_Pin)
 #define get_home_y()				HAL_GPIO_ReadPin(i2_home_y_GPIO_Port, i2_home_y_Pin)
 #define get_home_z()				HAL_GPIO_ReadPin(i3_home_z_GPIO_Port, i3_home_z_Pin)
-#define get_estop()					HAL_GPIO_ReadPin(i4_estop_GPIO_Port, i4_estop_Pin)
-#define get_stop()					HAL_GPIO_ReadPin(i5_stop_GPIO_Port, i5_stop_Pin)
-#define get_start()					HAL_GPIO_ReadPin(i6_start_GPIO_Port, i6_start_Pin)
-#define get_restart()				HAL_GPIO_ReadPin(i10_reset_GPIO_Port, i10_reset_Pin)
-#define get_almx()					HAL_GPIO_ReadPin(i13_almx_GPIO_Port, i13_almx_Pin)
-#define get_almy()					HAL_GPIO_ReadPin(i14_almy_GPIO_Port, i14_almy_Pin)
+#define get_start()					HAL_GPIO_ReadPin(i13_start_GPIO_Port, i13_start_Pin)
+#define get_stop()					HAL_GPIO_ReadPin(i14_stop_GPIO_Port, i14_stop_Pin)
+#define get_resett()				HAL_GPIO_ReadPin(i15_reset_GPIO_Port, i15_reset_Pin)
 
 #define home_x 1U
 #define home_y 1U
@@ -167,8 +164,8 @@ typedef struct {
 	__IO int8_t dir;
     __IO uint16_t current_pos;
     __IO uint16_t old_pos;
-    MoveMode mode;
-    MoveMode pre_mode;
+    __IO MoveMode mode;
+    __IO MoveMode pre_mode;
 } Axis_t;
 
 
@@ -212,6 +209,10 @@ void move_z_down(uint16_t d);
 void Control_motor_x(void);
 void Control_motor_y(void);
 void Control_motor_z(void);
+
+void Home_process_x(void);
+void Home_process_y(void);
+void Home_process_z(void);
 
 void Stop_motor_x(void);
 void Stop_motor_y(void);

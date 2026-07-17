@@ -1,5 +1,5 @@
 Core/Src/driver/modbus_rtu.o: ../Core/Src/driver/modbus_rtu.c \
- C:/Users/MCNEX/Desktop/MC/Core/Inc/driver/modbus_rtu.h \
+ C:/Users/Admin/Desktop/BMS/MC/Core/Inc/driver/modbus_rtu.h \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h \
  ../Core/Inc/stm32f4xx_hal_conf.h \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_rcc.h \
@@ -39,7 +39,7 @@ Core/Src/driver/modbus_rtu.o: ../Core/Src/driver/modbus_rtu.c \
  ../Middlewares/ST/STM32_USB_Device_Library/Core/Inc/usbd_core.h \
  ../Middlewares/ST/STM32_USB_Device_Library/Core/Inc/usbd_ioreq.h \
  ../Middlewares/ST/STM32_USB_Device_Library/Core/Inc/usbd_ctlreq.h
-C:/Users/MCNEX/Desktop/MC/Core/Inc/driver/modbus_rtu.h:
+C:/Users/Admin/Desktop/BMS/MC/Core/Inc/driver/modbus_rtu.h:
 ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h:
 ../Core/Inc/stm32f4xx_hal_conf.h:
 ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_rcc.h:

@@ -132,15 +132,15 @@ static inline uint16_t abs_diff_u16(uint16_t a, uint16_t b)
 // move z -> x,y
 void move_axis(uint16_t xd, uint16_t yd, uint16_t zd)
 {
-//	Input_indicator->bits.motor_busy = 1 ;
-//	Input_indicator->bits.home_done = 0 ;
     /* Check giới hạn */
-    if (xd > max_x || yd > max_y || zd > max_z) {
+    if (xd > Get_PC_Limit_Axis_X() || yd > Get_PC_Limit_Axis_Y() || zd > Get_PC_Limit_Axis_Z()) {
         return;
     }
+
 //#ifdef truc_z_len_het
 //    while(AxisZ.mode != STOP);
 //#endif
+
     /* ================= X AXIS ================= */
     uint16_t dx = abs_diff_u16(AxisX.current_pos, xd);
     if (dx > 1 && AxisX.mode == STOP) {
@@ -242,23 +242,13 @@ void Control_motor_x(){
 		AxisX.current_pos = AxisX.old_pos + (AxisX.dir*( get_counter_timer_slave_x()  ) );
 		Set_Speed_Motor_x( (get_counter_timer_slave_x()) + speed_default, speed_x_max);
 		Set_PC_Position_Axis_X(AxisX.current_pos);
-	//	Set_PC_Speed_Axis_X(get_speed_x() * 1000);
 		if((Motor_control->bits.x_left == 0 ) && (Motor_control->bits.x_right == 0 )){
 			if(get_counter_timer_x() >= get_pulse_x() ){
 			Stop_motor_x();
 			}
 		}
 		break;
-//	case MOVE_HOME1:
-//		Set_Speed_Motor_x(speed_home1_x, speed_x_max);
-//		move_x_left(max_x+1000);
-//		break;
-//	case MOVE_HOME2:
-//		if( get_counter_timer_slave_x() == 0 ){
-//		Set_Speed_Motor_x(speed_home2_x, speed_x_max);
-//		move_x_right(2000);
-//		}
-//		break;
+
 	case MOVE_HOME3:
 		Set_Speed_Motor_x(speed_home3_x, speed_x_max);
 		move_x_left(max_x);
@@ -267,6 +257,26 @@ void Control_motor_x(){
 		break;
 	}
 }
+void Home_process_x(void){
+	switch(AxisX.mode) {
+		case MOVE_HOME1:
+			Set_Speed_Motor_x(speed_home1_x, speed_x_max);
+			move_x_left(max_x+1000);
+			break;
+		case MOVE_HOME2:
+			Set_Speed_Motor_x(speed_home2_x, speed_x_max);
+			move_x_right(2000);
+			break;
+		case MOVE_HOME3:
+			Set_Speed_Motor_x(speed_home3_x, speed_x_max);
+			move_x_left(max_x);
+			break;
+		case STOP:
+
+			break;
+		}
+}
+
 
 void Control_motor_y(){
 	Set_PC_State_Axis_Y(AxisY.mode);
@@ -289,16 +299,7 @@ void Control_motor_y(){
 					}
 				}
 		break;
-//	case MOVE_HOME1:
-//		Set_Speed_Motor_y(speed_home1_y, speed_y_max);
-//		move_y_backward(max_y + 500);
-//		break;
-//	case MOVE_HOME2:
-//		if( get_counter_timer_slave_y() == 0 ){
-//		Set_Speed_Motor_y(speed_home2_y, speed_y_max);
-//		move_y_forward(2000);
-//		}
-//		break;
+
 	case MOVE_HOME3:
 		Set_Speed_Motor_y(speed_home3_y, speed_y_max);
 		move_y_backward(max_y );
@@ -306,6 +307,24 @@ void Control_motor_y(){
 	case STOP:
 		break;
 	}
+}
+void Home_process_y(void){
+	switch(AxisY.mode) {
+		case MOVE_HOME1:
+			Set_Speed_Motor_y(speed_home1_y, speed_y_max);
+			move_y_backward(max_y + 500);
+			break;
+		case MOVE_HOME2:
+			Set_Speed_Motor_y(speed_home2_y, speed_y_max);
+			move_y_forward(2000);
+			break;
+		case MOVE_HOME3:
+			Set_Speed_Motor_y(speed_home3_y, speed_y_max);
+			move_y_backward(max_y );
+			break;
+		case STOP:
+			break;
+		}
 }
 void Control_motor_z(){
 	Set_PC_State_Axis_Z(AxisZ.mode);
@@ -326,17 +345,7 @@ void Control_motor_z(){
 					}
 				}
 		break;
-//	case MOVE_HOME1:
-//		Set_Speed_Motor_z(speed_home1_z, speed_z_max);
-//		// cộng thêm tránh trường hợp đi từ max vào
-//		move_z_up(max_z + 1000);
-//		break;
-//	case MOVE_HOME2:
-//		if( get_counter_timer_slave_z() == 0 ){
-//		Set_Speed_Motor_z(speed_home2_z, speed_z_max);
-//		move_z_down(2500);
-//		}
-//		break;
+
 	case MOVE_HOME3:
 		Set_Speed_Motor_z(speed_home3_z, speed_z_max);
 		move_z_up(max_z);
@@ -344,6 +353,27 @@ void Control_motor_z(){
 	case STOP:
 		break;
 	}
+}
+void Home_process_z(void){
+	switch(AxisZ.mode) {
+		case MOVE_HOME1:
+			Set_Speed_Motor_z(speed_home1_z, speed_z_max);
+			// cộng thêm tránh trường hợp đi từ max vào
+			move_z_up(max_z + 1000);
+			break;
+		case MOVE_HOME2:
+		//	if( get_counter_timer_slave_z() == 0 ){
+			Set_Speed_Motor_z(speed_home2_z, speed_z_max);
+			move_z_down(2500);
+			//}
+			break;
+		case MOVE_HOME3:
+			Set_Speed_Motor_z(speed_home3_z, speed_z_max);
+			move_z_up(max_z);
+			break;
+		case STOP:
+			break;
+		}
 }
 void Stop_motor_x(void)
 {
@@ -439,6 +469,6 @@ void wait_handler_stop(){
 	{
 		__NOP();
 	}
-	Input_indicator->bits.home_done = 1 ;
-	Input_indicator->bits.motor_busy = 0 ;
+	Input_indicator->bits.home_state  = DONE ;
+	Input_indicator->bits.motor_state = DONE ;
 }

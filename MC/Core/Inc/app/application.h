@@ -24,7 +24,10 @@ void application_run_main(void);
 void task_timer6(void);
 void task_timer7(void);
 void Try_go_home();
-
+typedef enum {
+	NOT_YET = 0,
+	DONE = 1
+}State;
 
 
 

@@ -222,17 +222,14 @@ void SysTick_Handler(void)
 void EXTI0_IRQHandler(void)
 {
   /* USER CODE BEGIN EXTI0_IRQn 0 */
-		Input_indicator->bits.sensor_homex =  get_home_x();
+	Input_indicator->bits.sensor_homex =  get_home_x();
 	if(get_home_x() == home_x){
 		switch(AxisX.mode){
 		case MOVE_HOME1:
 			output_x_pull_stop();
 			reset_counter_timer_slave_x();
 			AxisX.mode = MOVE_HOME2;
-
-			Set_Speed_Motor_x(speed_home2_x, speed_x_max);
-			move_x_right(2000);
-
+			Home_process_x();
 			AxisX.current_pos = 0;
 			Set_PC_Position_Axis_X(AxisX.current_pos);
 			AxisX.old_pos = 0;
@@ -255,28 +252,19 @@ void EXTI0_IRQHandler(void)
 }
 
 /**
-  * @brief This function handles EXTI line1 interrupt.
+  * @brief This function handles EXTI line2 interrupt.
   */
-void EXTI1_IRQHandler(void)
+void EXTI2_IRQHandler(void)
 {
-  /* USER CODE BEGIN EXTI1_IRQn 0 */
-		Input_indicator->bits.sensor_homey =  get_home_y();
+  /* USER CODE BEGIN EXTI2_IRQn 0 */
+  	Input_indicator->bits.sensor_homey =  get_home_y();
 	if(get_home_y() == home_y){
 		switch(AxisY.mode){
 		case MOVE_HOME1:
 			output_y_pull_stop();
 			reset_counter_timer_slave_y();
 			AxisY.mode = MOVE_HOME2;
-			//case MOVE_HOME1:
-			//		Set_Speed_Motor_y(speed_home1_y, speed_y_max);
-			//		move_y_backward(max_y + 500);
-			//		break;
-			//	case MOVE_HOME2:
-			//		if( get_counter_timer_slave_y() == 0 ){
-					Set_Speed_Motor_y(speed_home2_y, speed_y_max);
-					move_y_forward(2000);
-			//		}
-			//		break;
+			Home_process_y();
 			AxisY.current_pos = 0;
 			Set_PC_Position_Axis_Y(AxisY.current_pos);
 			AxisY.old_pos = 0;
@@ -291,42 +279,28 @@ void EXTI1_IRQHandler(void)
 			break;
 	  }
   }
-  /* USER CODE END EXTI1_IRQn 0 */
-  HAL_GPIO_EXTI_IRQHandler(i2_home_y_Pin);
-  /* USER CODE BEGIN EXTI1_IRQn 1 */
 
-  /* USER CODE END EXTI1_IRQn 1 */
+  /* USER CODE END EXTI2_IRQn 0 */
+  HAL_GPIO_EXTI_IRQHandler(i2_home_y_Pin);
+  /* USER CODE BEGIN EXTI2_IRQn 1 */
+
+  /* USER CODE END EXTI2_IRQn 1 */
 }
 
 /**
-  * @brief This function handles EXTI line2 interrupt.
+  * @brief This function handles EXTI line3 interrupt.
   */
-void EXTI2_IRQHandler(void)
+void EXTI3_IRQHandler(void)
 {
-  /* USER CODE BEGIN EXTI2_IRQn 0 */
+  /* USER CODE BEGIN EXTI3_IRQn 0 */
 	Input_indicator->bits.sensor_homez =  get_home_z();
-	 if(get_home_z() == home_z){
+	if(get_home_z() == home_z){
 	switch(AxisZ.mode){
 		case MOVE_HOME1:
 			output_z_pull_stop();
 			reset_counter_timer_slave_z();
 			AxisZ.mode = MOVE_HOME2;
-
-
-			//	case MOVE_HOME1:
-			//		Set_Speed_Motor_z(speed_home1_z, speed_z_max);
-			//		// cộng thêm tránh trường hợp đi từ max vào
-			//		move_z_up(max_z + 1000);
-			//		break;
-			//	case MOVE_HOME2:
-			//		if( get_counter_timer_slave_z() == 0 ){
-					Set_Speed_Motor_z(speed_home2_z, speed_z_max);
-					move_z_down(2500);
-			//		}
-			//		break;
-
-
-
+			Home_process_z();
 			AxisZ.current_pos = 0;
 			Set_PC_Position_Axis_Z(AxisZ.current_pos);
 			AxisZ.old_pos = 0;
@@ -340,43 +314,12 @@ void EXTI2_IRQHandler(void)
 			AxisZ.old_pos = 0;
 		  break;
 	  }
-  }
-
-  /* USER CODE END EXTI2_IRQn 0 */
-  HAL_GPIO_EXTI_IRQHandler(i3_home_z_Pin);
-  /* USER CODE BEGIN EXTI2_IRQn 1 */
-
-  /* USER CODE END EXTI2_IRQn 1 */
-}
-
-/**
-  * @brief This function handles EXTI line3 interrupt.
-  */
-void EXTI3_IRQHandler(void)
-{
-  /* USER CODE BEGIN EXTI3_IRQn 0 */
-	Input_indicator->bits.e_stop = get_estop();
-	NVIC_SystemReset();
-
+	}
   /* USER CODE END EXTI3_IRQn 0 */
-  HAL_GPIO_EXTI_IRQHandler(i4_estop_Pin);
+  HAL_GPIO_EXTI_IRQHandler(i3_home_z_Pin);
   /* USER CODE BEGIN EXTI3_IRQn 1 */
 
   /* USER CODE END EXTI3_IRQn 1 */
-}
-
-/**
-  * @brief This function handles EXTI line4 interrupt.
-  */
-void EXTI4_IRQHandler(void)
-{
-  /* USER CODE BEGIN EXTI4_IRQn 0 */
-	Input_indicator->bits.stop =  get_stop();
-  /* USER CODE END EXTI4_IRQn 0 */
-  HAL_GPIO_EXTI_IRQHandler(i5_stop_Pin);
-  /* USER CODE BEGIN EXTI4_IRQn 1 */
-
-  /* USER CODE END EXTI4_IRQn 1 */
 }
 
 /**
@@ -391,22 +334,6 @@ void DMA1_Stream5_IRQHandler(void)
   /* USER CODE BEGIN DMA1_Stream5_IRQn 1 */
 
   /* USER CODE END DMA1_Stream5_IRQn 1 */
-}
-
-/**
-  * @brief This function handles EXTI line[9:5] interrupts.
-  */
-void EXTI9_5_IRQHandler(void)
-{
-  /* USER CODE BEGIN EXTI9_5_IRQn 0 */
-	Input_indicator->bits.start = get_start();
-	Input_indicator->bits.restart = get_restart();
-  /* USER CODE END EXTI9_5_IRQn 0 */
-  HAL_GPIO_EXTI_IRQHandler(i6_start_Pin);
-  HAL_GPIO_EXTI_IRQHandler(i10_reset_Pin);
-  /* USER CODE BEGIN EXTI9_5_IRQn 1 */
-
-  /* USER CODE END EXTI9_5_IRQn 1 */
 }
 
 /**
@@ -462,11 +389,11 @@ void USART2_IRQHandler(void)
 void EXTI15_10_IRQHandler(void)
 {
   /* USER CODE BEGIN EXTI15_10_IRQn 0 */
-	Input_indicator->bits.almx = get_almx();
-	Input_indicator->bits.almy = get_almy();
+
   /* USER CODE END EXTI15_10_IRQn 0 */
-  HAL_GPIO_EXTI_IRQHandler(i13_almx_Pin);
-  HAL_GPIO_EXTI_IRQHandler(i14_almy_Pin);
+  HAL_GPIO_EXTI_IRQHandler(i13_start_Pin);
+  HAL_GPIO_EXTI_IRQHandler(i14_stop_Pin);
+  HAL_GPIO_EXTI_IRQHandler(i15_reset_Pin);
   /* USER CODE BEGIN EXTI15_10_IRQn 1 */
 
   /* USER CODE END EXTI15_10_IRQn 1 */
@@ -545,4 +472,109 @@ void HAL_UARTEx_RxEventCallback(UART_HandleTypeDef *huart, uint16_t Size)
 	HAL_UARTEx_ReceiveToIdle_DMA(&huart2, RxData, 256);
 	}
 }
+
+void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin){
+	if(GPIO_Pin == i13_start_Pin ){
+		Input_indicator->bits.start =  HAL_GPIO_ReadPin(i13_start_GPIO_Port, i13_start_Pin);
+	}else if(GPIO_Pin == i14_stop_Pin){
+		Input_indicator->bits.stop = HAL_GPIO_ReadPin(i14_stop_GPIO_Port, i14_stop_Pin);
+	}else if(GPIO_Pin == i15_reset_Pin){
+		Input_indicator->bits.reset = HAL_GPIO_ReadPin(i15_reset_GPIO_Port, i15_reset_Pin);
+	}
+}
+/*
+ * 	Input_indicator->bits.sensor_homex =  get_home_x();
+	if(get_home_x() == home_x){
+		switch(AxisX.mode){
+		case MOVE_HOME1:
+			output_x_pull_stop();
+			reset_counter_timer_slave_x();
+			AxisX.mode = MOVE_HOME2;
+
+			Set_Speed_Motor_x(speed_home2_x, speed_x_max);
+			move_x_right(2000);
+
+			AxisX.current_pos = 0;
+			Set_PC_Position_Axis_X(AxisX.current_pos);
+			AxisX.old_pos = 0;
+			break;
+		case MOVE_HOME3:
+			output_x_pull_stop();
+			reset_counter_timer_slave_x();
+			AxisX.current_pos = 0;
+			Set_PC_Position_Axis_X(AxisX.current_pos);
+			AxisX.mode  = STOP;
+			AxisX.old_pos = 0;
+			break;
+	  }
+
+	  	Input_indicator->bits.sensor_homey =  get_home_y();
+	if(get_home_y() == home_y){
+		switch(AxisY.mode){
+		case MOVE_HOME1:
+			output_y_pull_stop();
+			reset_counter_timer_slave_y();
+			AxisY.mode = MOVE_HOME2;
+			//case MOVE_HOME1:
+			//		Set_Speed_Motor_y(speed_home1_y, speed_y_max);
+			//		move_y_backward(max_y + 500);
+			//		break;
+			//	case MOVE_HOME2:
+			//		if( get_counter_timer_slave_y() == 0 ){
+					Set_Speed_Motor_y(speed_home2_y, speed_y_max);
+					move_y_forward(2000);
+			//		}
+			//		break;
+			AxisY.current_pos = 0;
+			Set_PC_Position_Axis_Y(AxisY.current_pos);
+			AxisY.old_pos = 0;
+			break;
+		case MOVE_HOME3:
+			output_y_pull_stop();
+			reset_counter_timer_slave_y();
+			AxisY.current_pos = 0;
+			Set_PC_Position_Axis_Y(AxisY.current_pos);
+			AxisY.mode  = STOP;
+			AxisY.old_pos = 0;
+			break;
+	  }
+
+
+	  Input_indicator->bits.sensor_homez =  get_home_z();
+	 if(get_home_z() == home_z){
+	switch(AxisZ.mode){
+		case MOVE_HOME1:
+			output_z_pull_stop();
+			reset_counter_timer_slave_z();
+			AxisZ.mode = MOVE_HOME2;
+
+
+			//	case MOVE_HOME1:
+			//		Set_Speed_Motor_z(speed_home1_z, speed_z_max);
+			//		// cộng thêm tránh trư�?ng hợp đi từ max vào
+			//		move_z_up(max_z + 1000);
+			//		break;
+			//	case MOVE_HOME2:
+			//		if( get_counter_timer_slave_z() == 0 ){
+					Set_Speed_Motor_z(speed_home2_z, speed_z_max);
+					move_z_down(2500);
+			//		}
+			//		break;
+
+
+
+			AxisZ.current_pos = 0;
+			Set_PC_Position_Axis_Z(AxisZ.current_pos);
+			AxisZ.old_pos = 0;
+		  break;
+		case MOVE_HOME3:
+			output_z_pull_stop();
+			reset_counter_timer_slave_z();
+			AxisZ.current_pos = 0;
+			Set_PC_Position_Axis_Z(AxisZ.current_pos);
+			AxisZ.mode  = STOP;
+			AxisZ.old_pos = 0;
+		  break;
+	  }
+ * */
 /* USER CODE END 1 */

@@ -33,20 +33,20 @@ Core/Src/main.o: ../Core/Src/main.c ../Core/Inc/main.h \
  ../USB_DEVICE/App/usb_device.h \
  ../Middlewares/ST/STM32_USB_Device_Library/Core/Inc/usbd_def.h \
  ../USB_DEVICE/Target/usbd_conf.h \
- C:/Users/MCNEX/Desktop/MC/Core/Inc/app/application.h \
- C:/Users/MCNEX/Desktop/MC/Core/Inc/driver/dio_control.h \
- C:/Users/MCNEX/Desktop/MC/Core/Inc/driver/modbus_rtu.h \
- C:/Users/MCNEX/Desktop/MC/Core/Inc/driver/motor_control.h \
- C:/Users/MCNEX/Desktop/MC/Core/Inc/driver/modbus_rtu.h \
- C:/Users/MCNEX/Desktop/MC/Core/Inc/driver/flash.h \
+ C:/Users/Admin/Desktop/BMS/MC/Core/Inc/app/application.h \
+ C:/Users/Admin/Desktop/BMS/MC/Core/Inc/driver/dio_control.h \
+ C:/Users/Admin/Desktop/BMS/MC/Core/Inc/driver/modbus_rtu.h \
+ C:/Users/Admin/Desktop/BMS/MC/Core/Inc/driver/motor_control.h \
+ C:/Users/Admin/Desktop/BMS/MC/Core/Inc/driver/modbus_rtu.h \
+ C:/Users/Admin/Desktop/BMS/MC/Core/Inc/driver/flash.h \
  ../Drivers/CMSIS/Include/cmsis_gcc.h \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_tim.h \
- C:/Users/MCNEX/Desktop/MC/Core/Inc/driver/flash.h \
- C:/Users/MCNEX/Desktop/MC/Core/Inc/driver/common.h \
- C:/Users/MCNEX/Desktop/MC/Core/Inc/driver/hmi_control.h \
- C:/Users/MCNEX/Desktop/MC/Core/Inc/driver/dio_control.h \
- C:/Users/MCNEX/Desktop/MC/Core/Inc/driver/motor_control.h \
- C:/Users/MCNEX/Desktop/MC/Core/Inc/driver/tick.h
+ C:/Users/Admin/Desktop/BMS/MC/Core/Inc/driver/flash.h \
+ C:/Users/Admin/Desktop/BMS/MC/Core/Inc/driver/common.h \
+ C:/Users/Admin/Desktop/BMS/MC/Core/Inc/driver/hmi_control.h \
+ C:/Users/Admin/Desktop/BMS/MC/Core/Inc/driver/dio_control.h \
+ C:/Users/Admin/Desktop/BMS/MC/Core/Inc/driver/motor_control.h \
+ C:/Users/Admin/Desktop/BMS/MC/Core/Inc/driver/tick.h
 ../Core/Inc/main.h:
 ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h:
 ../Core/Inc/stm32f4xx_hal_conf.h:
@@ -82,17 +82,17 @@ Core/Src/main.o: ../Core/Src/main.c ../Core/Inc/main.h \
 ../USB_DEVICE/App/usb_device.h:
 ../Middlewares/ST/STM32_USB_Device_Library/Core/Inc/usbd_def.h:
 ../USB_DEVICE/Target/usbd_conf.h:
-C:/Users/MCNEX/Desktop/MC/Core/Inc/app/application.h:
-C:/Users/MCNEX/Desktop/MC/Core/Inc/driver/dio_control.h:
-C:/Users/MCNEX/Desktop/MC/Core/Inc/driver/modbus_rtu.h:
-C:/Users/MCNEX/Desktop/MC/Core/Inc/driver/motor_control.h:
-C:/Users/MCNEX/Desktop/MC/Core/Inc/driver/modbus_rtu.h:
-C:/Users/MCNEX/Desktop/MC/Core/Inc/driver/flash.h:
+C:/Users/Admin/Desktop/BMS/MC/Core/Inc/app/application.h:
+C:/Users/Admin/Desktop/BMS/MC/Core/Inc/driver/dio_control.h:
+C:/Users/Admin/Desktop/BMS/MC/Core/Inc/driver/modbus_rtu.h:
+C:/Users/Admin/Desktop/BMS/MC/Core/Inc/driver/motor_control.h:
+C:/Users/Admin/Desktop/BMS/MC/Core/Inc/driver/modbus_rtu.h:
+C:/Users/Admin/Desktop/BMS/MC/Core/Inc/driver/flash.h:
 ../Drivers/CMSIS/Include/cmsis_gcc.h:
 ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_tim.h:
-C:/Users/MCNEX/Desktop/MC/Core/Inc/driver/flash.h:
-C:/Users/MCNEX/Desktop/MC/Core/Inc/driver/common.h:
-C:/Users/MCNEX/Desktop/MC/Core/Inc/driver/hmi_control.h:
-C:/Users/MCNEX/Desktop/MC/Core/Inc/driver/dio_control.h:
-C:/Users/MCNEX/Desktop/MC/Core/Inc/driver/motor_control.h:
-C:/Users/MCNEX/Desktop/MC/Core/Inc/driver/tick.h:
+C:/Users/Admin/Desktop/BMS/MC/Core/Inc/driver/flash.h:
+C:/Users/Admin/Desktop/BMS/MC/Core/Inc/driver/common.h:
+C:/Users/Admin/Desktop/BMS/MC/Core/Inc/driver/hmi_control.h:
+C:/Users/Admin/Desktop/BMS/MC/Core/Inc/driver/dio_control.h:
+C:/Users/Admin/Desktop/BMS/MC/Core/Inc/driver/motor_control.h:
+C:/Users/Admin/Desktop/BMS/MC/Core/Inc/driver/tick.h:

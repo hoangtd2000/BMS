@@ -31,26 +31,21 @@ typedef struct
 
 typedef union {
     struct {
-    	uint8_t gohome        : 1;
-        uint8_t setpoint		: 1;
-        uint8_t estop 		: 1;
-        uint8_t restart 		: 1;
-        uint8_t stop 		: 1;
-        uint8_t reserve 			: 3;
-        uint8_t x_left 		: 1;
-        uint8_t x_right 		: 1;
-        uint8_t y_backward 	: 1;
-        uint8_t y_forward 	: 1;
-        uint8_t z_up 			: 1;
-        uint8_t z_down 		: 1;
-        uint8_t reserve1 			: 2;
+    	uint8_t Home_process		: 1;
+        uint8_t Set_point			: 1;
+        uint8_t x_left 				: 1;
+        uint8_t x_right 			: 1;
+        uint8_t y_backward 			: 1;
+        uint8_t y_forward 			: 1;
+        uint8_t z_up 				: 1;
+        uint8_t z_down 				: 1;
     } bits;
-    uint16_t all;
+    uint8_t all;
 }Motor_control_t;
 
 typedef union {
     struct {
-    	uint8_t output1        	: 1;
+    	uint8_t output1			: 1;
         uint8_t output2			: 1;
         uint8_t output3 		: 1;
         uint8_t output4			: 1;
@@ -58,18 +53,8 @@ typedef union {
         uint8_t output6 		: 1;
         uint8_t output7 		: 1;
         uint8_t output8 		: 1;
-        uint8_t output9 		: 1;
-        uint8_t output10 		: 1;
-        uint8_t output11 		: 1;
-        uint8_t output12 		: 1;
-        uint8_t output13 		: 1;
-        uint8_t output14 		: 1;
-        uint8_t output15 		: 1;
-        uint8_t output16 		: 1;
-        uint8_t output17 		: 1;
-        uint8_t output18 		: 1;
     } bits;
-    uint32_t all;
+    uint8_t all;
 }Output_control_t;
 
 typedef union {
@@ -77,25 +62,13 @@ typedef union {
     	uint8_t sensor_homex        : 1;
         uint8_t sensor_homey		: 1;
         uint8_t sensor_homez 		: 1;
-        uint8_t e_stop 				: 1;
-        uint8_t stop 				: 1;
         uint8_t start 				: 1;
-        uint8_t restart 			: 1;
-        uint8_t vacum1 				: 1;
-        uint8_t vacum2 				: 1;
-        uint8_t door_l 				: 1;
-        uint8_t door_r 				: 1;
-        uint8_t presure 			: 1;
-        uint8_t almx 				: 1;
-        uint8_t almy				: 1;
-        uint8_t reserve0				: 1;
-        uint8_t reserve1				: 1;
-        uint8_t reserve2				: 1;
-        uint8_t reserve3				: 1;
-        uint8_t home_done 			: 1;
-        uint8_t motor_busy			: 1;
+        uint8_t stop 				: 1;
+        uint8_t reset 				: 1;
+        uint8_t home_state 			: 1;
+        uint8_t motor_state 		: 1;
     } bits;
-    uint32_t all;
+    uint8_t all;
 }Input_indicator_t;
 
 
@@ -114,13 +87,13 @@ typedef struct{
 typedef struct{
 	uint16_t target_x;
 	uint16_t speed_x;
-	uint16_t maxspeed_x;
+	uint16_t limit_x;
 	uint16_t target_y;
 	uint16_t speed_y;
-	uint16_t maxspeed_y;
+	uint16_t limit_y;
 	uint16_t target_z;
 	uint16_t speed_z;
-	uint16_t maxspeed_z;
+	uint16_t limit_z;
 }Axiscommand_t;
 
 
@@ -169,31 +142,18 @@ uint16_t Get_PC_Speed_Axis_Z(void);
 void Set_PC_State_Axis_X(uint16_t value);
 void Set_PC_State_Axis_Y(uint16_t value);
 void Set_PC_State_Axis_Z(uint16_t value);
-uint16_t Get_PC_Maxspeed_Axis_X(void);
-uint16_t Get_PC_Maxspeed_Axis_Y(void);
-uint16_t Get_PC_Maxspeed_Axis_Z(void);
+uint16_t  Get_PC_Limit_Axis_X(void);
+uint16_t  Get_PC_Limit_Axis_Y(void);
+uint16_t  Get_PC_Limit_Axis_Z(void);
 
 
 
 
-//taskbar
-void Handle_main(void);
-void Handle_output(void);
 void Handle_motor(void);
-void Handle_setting(void);
-//tab main
-void Handle_reset(void);
-void Handle_start(void);
-void Handle_stop(void);
-//tab_motor
+void Handle_output(void);
 
-
-void Handle_gohome(void);
+void Handle_homeprocess(void);
 void Handle_setpoint(void);
-void Handle_estop(void);
-void Handle_restart(void);
-void Handle_reserve(void);
-
 void Handle_X_Left (void);
 void Handle_X_Right (void);
 void Handle_Y_Forward(void);
