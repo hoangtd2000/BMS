@@ -242,6 +242,7 @@ void EXTI0_IRQHandler(void)
 			AxisX.old_pos = 0;
 			break;
 	  }
+		Set_PC_State_Axis_X(AxisX.mode);
  }
   /* USER CODE END EXTI0_IRQn 0 */
   HAL_GPIO_EXTI_IRQHandler(i1_home_x_Pin);
@@ -277,6 +278,7 @@ void EXTI2_IRQHandler(void)
 			AxisY.old_pos = 0;
 			break;
 	  }
+		Set_PC_State_Axis_Y(AxisY.mode);
   }
 
   /* USER CODE END EXTI2_IRQn 0 */
@@ -313,6 +315,7 @@ void EXTI3_IRQHandler(void)
 			AxisZ.old_pos = 0;
 		  break;
 	  }
+	Set_PC_State_Axis_Z(AxisZ.mode);
 	}
   /* USER CODE END EXTI3_IRQn 0 */
   HAL_GPIO_EXTI_IRQHandler(i3_home_z_Pin);

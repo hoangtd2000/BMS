@@ -674,7 +674,7 @@ static void MX_GPIO_Init(void)
 
   /*Configure GPIO pins : i1_home_x_Pin i2_home_y_Pin i3_home_z_Pin */
   GPIO_InitStruct.Pin = i1_home_x_Pin|i2_home_y_Pin|i3_home_z_Pin;
-  GPIO_InitStruct.Mode = GPIO_MODE_IT_RISING;
+  GPIO_InitStruct.Mode = GPIO_MODE_IT_RISING_FALLING;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   HAL_GPIO_Init(GPIOC, &GPIO_InitStruct);
 

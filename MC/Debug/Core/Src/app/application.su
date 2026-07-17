@@ -1,5 +1,5 @@
 ../Core/Src/app/application.c:24:6:application_init	8	static
 ../Core/Src/app/application.c:44:6:Try_go_home	8	static
 ../Core/Src/app/application.c:75:6:application_run_main	8	static
-../Core/Src/app/application.c:86:6:task_timer6	4	static
-../Core/Src/app/application.c:90:6:task_timer7	8	static
+../Core/Src/app/application.c:97:6:task_timer6	4	static
+../Core/Src/app/application.c:101:6:task_timer7	8	static

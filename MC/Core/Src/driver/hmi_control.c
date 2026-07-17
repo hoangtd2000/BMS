@@ -92,21 +92,21 @@ uint16_t Get_PC_Speed_Axis_Z(void){
 }
 
 void Set_PC_State_Axis_X(uint16_t value){
-	if(value == 0 ){
+	if(value == STOP ){
 		Axisfeedback->state_x = DONE;
 	}else{
 		Axisfeedback->state_x = NOT_YET;
 	}
 }
 void Set_PC_State_Axis_Y(uint16_t value){
-	if(value == 0 ){
+	if(value == STOP ){
 		Axisfeedback->state_y = DONE;
 	}else{
 		Axisfeedback->state_y = NOT_YET;
 	}
 }
 void Set_PC_State_Axis_Z(uint16_t value){
-	if(value == 0 ){
+	if(value == STOP ){
 		Axisfeedback->state_z = DONE;
 	}else{
 		Axisfeedback->state_z = NOT_YET;
