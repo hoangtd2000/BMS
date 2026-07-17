@@ -129,6 +129,8 @@ static inline uint16_t abs_diff_u16(uint16_t a, uint16_t b)
     return (a > b) ? (a - b) : (b - a);
 }
 
+static inline void UpdateMotorStateIndicator(void);
+
 // move z -> x,y
 void move_axis(uint16_t xd, uint16_t yd, uint16_t zd)
 {
@@ -146,7 +148,7 @@ void move_axis(uint16_t xd, uint16_t yd, uint16_t zd)
     if (dx > 1 && AxisX.mode == STOP) {
         Set_Speed_Motor_x(Axiscommand->speed_x, speed_x_max);
         AxisX.mode = MOVE_AUTO;
-     //   Set_PC_State_Axis_X(AxisX.mode);
+        UpdateMotorStateIndicator();
         if (AxisX.current_pos > xd) {
             move_x_left(dx);
         } else {
@@ -159,7 +161,7 @@ void move_axis(uint16_t xd, uint16_t yd, uint16_t zd)
     if (dy > 1 && AxisY.mode == STOP) {
         Set_Speed_Motor_y(Axiscommand->speed_y, speed_y_max);
         AxisY.mode = MOVE_AUTO;
-    //    Set_PC_State_Axis_Y(AxisY.mode);
+        UpdateMotorStateIndicator();
         if (AxisY.current_pos > yd) {
             move_y_backward(dy);
         } else {
@@ -171,8 +173,8 @@ void move_axis(uint16_t xd, uint16_t yd, uint16_t zd)
     uint16_t dz = abs_diff_u16(AxisZ.current_pos, zd);
     if (dz > 1 && AxisZ.mode == STOP) {
         Set_Speed_Motor_z(Axiscommand->speed_z,speed_z_max);
-       AxisZ.mode = MOVE_AUTO;
-    //    Set_PC_State_Axis_Z(AxisZ.mode);
+        AxisZ.mode = MOVE_AUTO;
+        UpdateMotorStateIndicator();
         if (AxisZ.current_pos > zd) {
             move_z_up(dz);
         } else {
@@ -194,7 +196,7 @@ void move_axis1(uint16_t xd, uint16_t yd, uint16_t zd)
     if (dx > 1 && AxisX.mode == STOP) {
         Set_Speed_Motor_x(speed_run, speed_x_max);
         AxisX.mode = MOVE_AUTO;
-        Set_PC_State_Axis_X(AxisX.mode);
+        UpdateMotorStateIndicator();
         if (AxisX.current_pos > xd) {
             move_x_left(dx);
         } else {
@@ -207,7 +209,7 @@ void move_axis1(uint16_t xd, uint16_t yd, uint16_t zd)
     if (dy > 1 && AxisY.mode == STOP) {
         Set_Speed_Motor_y(speed_run, speed_y_max);
         AxisY.mode = MOVE_AUTO;
-        Set_PC_State_Axis_Y(AxisY.mode);
+        UpdateMotorStateIndicator();
         if (AxisY.current_pos > yd) {
             move_y_backward(dy);
         } else {
@@ -221,7 +223,7 @@ void move_axis1(uint16_t xd, uint16_t yd, uint16_t zd)
     if (dz > 1 && AxisZ.mode == STOP) {
         Set_Speed_Motor_z(speed_run_z, speed_z_max);
         AxisZ.mode = MOVE_AUTO;
-        Set_PC_State_Axis_Z(AxisZ.mode);
+        UpdateMotorStateIndicator();
         if (AxisZ.current_pos > zd) {
             move_z_up(dz);
         } else {
@@ -398,7 +400,7 @@ void Stop_motor_x(void)
     }
 
     AxisX.mode = STOP;
-	Set_PC_State_Axis_X(AxisX.mode);
+    UpdateMotorStateIndicator();
     AxisX.old_pos = AxisX.current_pos;
 }
 
@@ -425,7 +427,7 @@ void Stop_motor_y(void)
         break;
     }
     AxisY.mode = STOP;
-    Set_PC_State_Axis_Y(AxisY.mode);
+    UpdateMotorStateIndicator();
     AxisY.old_pos = AxisY.current_pos;
 }
 
@@ -452,7 +454,7 @@ void Stop_motor_z(void)
         break;
     }
     AxisZ.mode = STOP;
-    Set_PC_State_Axis_Z(AxisZ.mode);
+    UpdateMotorStateIndicator();
     AxisZ.old_pos = AxisZ.current_pos;
 }
 
@@ -461,6 +463,15 @@ static inline bool AllAxisStop(void)
     return (AxisX.mode == STOP &&
             AxisY.mode == STOP &&
             AxisZ.mode == STOP);
+}
+
+static inline void UpdateMotorStateIndicator(void)
+{
+    if (AllAxisStop()) {
+        Input_indicator->bits.motor_state = DONE;
+    } else {
+        Input_indicator->bits.motor_state = NOT_YET;
+    }
 }
 
 void wait_handler_stop(){

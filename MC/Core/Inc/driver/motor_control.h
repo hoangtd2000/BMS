@@ -91,7 +91,7 @@
 #define reset_counter_timer_slave_y() __HAL_TIM_SET_COUNTER(&htim2, 0)
 #define reset_counter_timer_slave_z() __HAL_TIM_SET_COUNTER(&htim9, 0)
 
-#define max_x 55000U
+#define max_x 58000U
 #define max_y 33500U
 #define max_z_tray 10000U
 #define max_z_rubber 9900U

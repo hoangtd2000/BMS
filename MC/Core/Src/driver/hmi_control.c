@@ -203,6 +203,11 @@ void Handle_setpoint(void){
 	Motor_control->bits.Set_point = 0 ;
 	if((AxisX.mode == STOP) &&(AxisY.mode == STOP) && (AxisZ.mode == STOP)){
 	move_axis(Get_PC_Position_Axis_X(),Get_PC_Position_Axis_Y(), Get_PC_Position_Axis_Z());
+	if((AxisX.mode == STOP) &&(AxisY.mode == STOP) && (AxisZ.mode == STOP)){
+		Input_indicator->bits.motor_state = DONE ;
+	}else{
+		Input_indicator->bits.motor_state = NOT_YET ;
+	}	
 	}
 }
 
