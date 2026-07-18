@@ -148,7 +148,7 @@ void move_axis(uint16_t xd, uint16_t yd, uint16_t zd)
     if (dx > 1 && AxisX.mode == STOP) {
         Set_Speed_Motor_x(Axiscommand->speed_x, speed_x_max);
         AxisX.mode = MOVE_AUTO;
-        UpdateMotorStateIndicator();
+       // UpdateMotorStateIndicator();
         if (AxisX.current_pos > xd) {
             move_x_left(dx);
         } else {
@@ -161,7 +161,7 @@ void move_axis(uint16_t xd, uint16_t yd, uint16_t zd)
     if (dy > 1 && AxisY.mode == STOP) {
         Set_Speed_Motor_y(Axiscommand->speed_y, speed_y_max);
         AxisY.mode = MOVE_AUTO;
-        UpdateMotorStateIndicator();
+        //UpdateMotorStateIndicator();
         if (AxisY.current_pos > yd) {
             move_y_backward(dy);
         } else {
@@ -174,7 +174,7 @@ void move_axis(uint16_t xd, uint16_t yd, uint16_t zd)
     if (dz > 1 && AxisZ.mode == STOP) {
         Set_Speed_Motor_z(Axiscommand->speed_z,speed_z_max);
         AxisZ.mode = MOVE_AUTO;
-        UpdateMotorStateIndicator();
+       // UpdateMotorStateIndicator();
         if (AxisZ.current_pos > zd) {
             move_z_up(dz);
         } else {
@@ -286,14 +286,12 @@ void Control_motor_y(){
 	case MOVE_AUTO:
 		AxisY.current_pos = AxisY.old_pos + (AxisY.dir*( get_counter_timer_slave_y()  ) );
 		Set_PC_Position_Axis_Y(AxisY.current_pos);
-	//	Set_PC_Speed_Axis_Y(get_speed_y() * 1000);
 
 		break;
 	case MOVE_MANUAL:
 		AxisY.current_pos = AxisY.old_pos + (AxisY.dir*( get_counter_timer_slave_y()  ) );
 		Set_PC_Position_Axis_Y(AxisY.current_pos);
 		Set_Speed_Motor_y( (get_counter_timer_slave_y()) + speed_default, speed_y_max);
-	//	Set_PC_Speed_Axis_Y(get_speed_y() * 1000);
 		if((Motor_control->bits.y_forward == 0 ) && (Motor_control->bits.y_backward == 0 )){
 			if(get_counter_timer_y() >= get_pulse_y() ){
 					Stop_motor_y();
@@ -333,13 +331,11 @@ void Control_motor_z(){
 	case MOVE_AUTO:
 		AxisZ.current_pos = AxisZ.old_pos + (AxisZ.dir*(get_counter_timer_slave_z() ) );
 		Set_PC_Position_Axis_Z(AxisZ.current_pos);
-	//	Set_PC_Speed_Axis_Z(get_speed_z() * 1000);
 		break;
 	case MOVE_MANUAL:
 		AxisZ.current_pos = AxisZ.old_pos + (AxisZ.dir*(get_counter_timer_slave_z() ) );
 		Set_PC_Position_Axis_Z(AxisZ.current_pos);
 		Set_Speed_Motor_z((get_counter_timer_slave_z()) + speed_default, speed_z_max);
-	//	Set_PC_Speed_Axis_Z(get_speed_z() * 1000);
 		if((Motor_control->bits.z_up == 0 ) && (Motor_control->bits.z_down == 0 )){
 			if(get_counter_timer_z() >= get_pulse_z() ){
 				Stop_motor_z();

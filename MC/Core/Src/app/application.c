@@ -8,7 +8,7 @@
 #include "application.h"
 
 extern  uint8_t RxData[256];
-extern UART_HandleTypeDef huart2;
+//extern UART_HandleTypeDef huart2;
 extern volatile SystemFlag_t SystemFlag;
 extern Axis_t AxisX, AxisY, AxisZ;
 extern Input_indicator_t* Input_indicator;
@@ -23,7 +23,7 @@ extern  Motor_control_t* Motor_control;
 
 void application_init(){
 		HAL_Delay(7000);
-		HAL_UARTEx_ReceiveToIdle_DMA(&huart2, RxData, 256);
+		//HAL_UARTEx_ReceiveToIdle_DMA(&huart2, RxData, 256);
 		HAL_TIM_Base_Start_IT(&htim5); //x
 		HAL_TIM_Base_Start_IT(&htim9); //y
 		HAL_TIM_Base_Start_IT(&htim2); //z
@@ -73,11 +73,11 @@ void Try_go_home(){
 }
 
 void application_run_main(void){
-	if(activeTransport!=MODBUS_NONE){
-		if(Tick- lastFrameTime >=0 ){
-			activeTransport = MODBUS_NONE;
-		}
-	}
+//	if(activeTransport!=MODBUS_NONE){
+//		if(Tick- lastFrameTime >=0 ){
+//			activeTransport = MODBUS_NONE;
+//		}
+//	}
 	Handle_motor();
 	Handle_output();
 	if((AxisX.mode == STOP) &&(AxisY.mode == STOP) && (AxisZ.mode == STOP)){

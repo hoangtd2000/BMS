@@ -226,17 +226,17 @@ void Handle_X_Right (void){
 	}
 	if(AxisX.mode == STOP) {
 	  AxisX.mode =  MOVE_MANUAL;
-	  move_x_right(Get_PC_Limit_Axis_X() - AxisX.current_pos);
+	  move_x_right((uint16_t)Get_PC_Limit_Axis_X() - AxisX.current_pos);
 	}
 
 }
 void Handle_Y_Forward(void){
-	if(AxisY.current_pos >= Get_PC_Limit_Axis_Y()) {
+	if(AxisY.current_pos >= (uint16_t)Get_PC_Limit_Axis_Y()) {
 		return;
 		}
 	if(AxisY.mode == STOP){
 		AxisY.mode = MOVE_MANUAL;
-		move_y_forward(Get_PC_Limit_Axis_Y()- AxisY.current_pos);
+		move_y_forward((uint16_t)Get_PC_Limit_Axis_Y()- AxisY.current_pos);
 	}
 }
 void Handle_Y_Backward(void){
@@ -258,12 +258,12 @@ void Handle_Z_Up(void){
 	}
 }
 void Handle_Z_Down(void){
-	if(AxisZ.current_pos >=Get_PC_Limit_Axis_Z()  ){
+	if(AxisZ.current_pos >= (uint16_t)Get_PC_Limit_Axis_Z()  ){
 			return ;
 		}
 	if(AxisZ.mode == STOP) {
 		AxisZ.mode = MOVE_MANUAL;
-		move_z_down(Get_PC_Limit_Axis_Z()-AxisZ.current_pos);
+		move_z_down((uint16_t)Get_PC_Limit_Axis_Z()-AxisZ.current_pos);
 	}
 }
 

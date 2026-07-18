@@ -267,11 +267,11 @@ static int8_t CDC_Control_FS(uint8_t cmd, uint8_t* pbuf, uint16_t length)
 static int8_t CDC_Receive_FS(uint8_t* Buf, uint32_t *Len)
 {
   /* USER CODE BEGIN 6 */
-	if (activeTransport == MODBUS_NONE)
-			{
-				activeTransport  = MODBUS_USB;
-			}
-			lastFrameTime = Tick + MODBUS_TIMEOUT_MS;
+//	if (activeTransport == MODBUS_NONE)
+//			{
+//				activeTransport  = MODBUS_USB;
+//			}
+//			lastFrameTime = Tick + MODBUS_TIMEOUT_MS;
 			process_data();
 
   USBD_CDC_SetRxBuffer(&hUsbDeviceFS, &Buf[0]);

@@ -27,9 +27,9 @@
 
 /* Private typedef -----------------------------------------------------------*/
 /* USER CODE BEGIN TD */
-uint32_t Tick = 0;
-volatile uint32_t lastFrameTime = 0;
-volatile ModbusTransport_t activeTransport = MODBUS_NONE;
+//uint32_t Tick = 0;
+//volatile uint32_t lastFrameTime = 0;
+//volatile ModbusTransport_t activeTransport = MODBUS_NONE;
 /* USER CODE END TD */
 
 /* Private define ------------------------------------------------------------*/
@@ -71,8 +71,6 @@ extern TIM_HandleTypeDef htim2;
 extern TIM_HandleTypeDef htim5;
 extern TIM_HandleTypeDef htim7;
 extern TIM_HandleTypeDef htim9;
-extern DMA_HandleTypeDef hdma_usart2_rx;
-extern UART_HandleTypeDef huart2;
 /* USER CODE BEGIN EV */
 
 /* USER CODE END EV */
@@ -325,20 +323,6 @@ void EXTI3_IRQHandler(void)
 }
 
 /**
-  * @brief This function handles DMA1 stream5 global interrupt.
-  */
-void DMA1_Stream5_IRQHandler(void)
-{
-  /* USER CODE BEGIN DMA1_Stream5_IRQn 0 */
-
-  /* USER CODE END DMA1_Stream5_IRQn 0 */
-  HAL_DMA_IRQHandler(&hdma_usart2_rx);
-  /* USER CODE BEGIN DMA1_Stream5_IRQn 1 */
-
-  /* USER CODE END DMA1_Stream5_IRQn 1 */
-}
-
-/**
   * @brief This function handles TIM1 break interrupt and TIM9 global interrupt.
   */
 void TIM1_BRK_TIM9_IRQHandler(void)
@@ -369,20 +353,6 @@ void TIM2_IRQHandler(void)
 		Stop_motor_y();
 
   /* USER CODE END TIM2_IRQn 1 */
-}
-
-/**
-  * @brief This function handles USART2 global interrupt.
-  */
-void USART2_IRQHandler(void)
-{
-  /* USER CODE BEGIN USART2_IRQn 0 */
-
-  /* USER CODE END USART2_IRQn 0 */
-  HAL_UART_IRQHandler(&huart2);
-  /* USER CODE BEGIN USART2_IRQn 1 */
-
-  /* USER CODE END USART2_IRQn 1 */
 }
 
 /**
@@ -423,7 +393,7 @@ void TIM5_IRQHandler(void)
 void TIM7_IRQHandler(void)
 {
   /* USER CODE BEGIN TIM7_IRQn 0 */
-  Tick++;
+ // Tick++;
   task_timer7();
   /* USER CODE END TIM7_IRQn 0 */
   HAL_TIM_IRQHandler(&htim7);
@@ -447,19 +417,19 @@ void OTG_FS_IRQHandler(void)
 }
 
 /* USER CODE BEGIN 1 */
-void HAL_UARTEx_RxEventCallback(UART_HandleTypeDef *huart, uint16_t Size)
-{
-
-	if(huart-> Instance == USART2){
-		if (activeTransport == MODBUS_NONE)
-		{
-			activeTransport  = MODBUS_UART;
-		}
-		lastFrameTime = Tick + MODBUS_TIMEOUT_MS;
-		process_data();
-	HAL_UARTEx_ReceiveToIdle_DMA(&huart2, RxData, 256);
-	}
-}
+//void HAL_UARTEx_RxEventCallback(UART_HandleTypeDef *huart, uint16_t Size)
+//{
+//
+//	if(huart-> Instance == USART2){
+//		if (activeTransport == MODBUS_NONE)
+//		{
+//			activeTransport  = MODBUS_UART;
+//		}
+//		lastFrameTime = Tick + MODBUS_TIMEOUT_MS;
+//		process_data();
+//	HAL_UARTEx_ReceiveToIdle_DMA(&huart2, RxData, 256);
+//	}
+//}
 
 void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin){
 	if(GPIO_Pin == i13_start_Pin ){

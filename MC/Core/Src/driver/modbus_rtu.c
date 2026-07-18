@@ -145,14 +145,15 @@ void sendData(uint8_t *data, int size)
     data[size]   = crc & 0xFF;
     data[size+1] = (crc >> 8) & 0xFF;
 
-    if (activeTransport == MODBUS_UART)
-    {
-        HAL_UART_Transmit(&huart2, data, size+2, 1000);
-    }
-    else if (activeTransport == MODBUS_USB)
-    {
-        while (CDC_Transmit_FS(data, size+2) == USBD_BUSY);
-    }
+//    if (activeTransport == MODBUS_UART)
+//    {
+//        HAL_UART_Transmit(&huart2, data, size+2, 1000);
+//    }
+//    else if (activeTransport == MODBUS_USB)
+//    {
+//        while (CDC_Transmit_FS(data, size+2) == USBD_BUSY);
+//    }
+    while (CDC_Transmit_FS(data, size+2) == USBD_BUSY);
 }
 
 void modbusException (uint8_t exceptioncode)

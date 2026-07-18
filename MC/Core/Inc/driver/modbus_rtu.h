@@ -20,7 +20,7 @@
 #define Min_NumRegs 			(1U)
 #define Max_NumRegs 			(299U)
 
-extern UART_HandleTypeDef huart2;
+//extern UART_HandleTypeDef huart2;
 extern uint8_t Coils_Database[25];
 extern uint16_t Holding_Registers_Database[300];
 extern uint8_t Inputs_Database[50];
