@@ -78,8 +78,7 @@ void application_run_main(void){
 //			activeTransport = MODBUS_NONE;
 //		}
 //	}
-	Handle_motor();
-	Handle_output();
+
 	if((AxisX.mode == STOP) &&(AxisY.mode == STOP) && (AxisZ.mode == STOP)){
 		Input_indicator->bits.motor_state = DONE ;
 	}else{
@@ -95,8 +94,8 @@ void application_run_main(void){
 
 
 void task_timer6(){
-//	Handle_motor();
-//	Handle_output();
+	Handle_motor();
+	Handle_output();
 }
 void task_timer7(){
 	Control_motor_y();
