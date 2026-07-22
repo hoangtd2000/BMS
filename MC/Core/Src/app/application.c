@@ -20,14 +20,15 @@ extern volatile uint32_t lastFrameTime;
 
 extern  Motor_control_t* Motor_control;
 
-
+//TIM_HandleTypeDef htim6;
+//TIM_HandleTypeDef htim7;
 void application_init(){
 		HAL_Delay(7000);
 		//HAL_UARTEx_ReceiveToIdle_DMA(&huart2, RxData, 256);
 		HAL_TIM_Base_Start_IT(&htim5); //x
 		HAL_TIM_Base_Start_IT(&htim9); //y
 		HAL_TIM_Base_Start_IT(&htim2); //z
-	//	HAL_TIM_Base_Start_IT(&htim6); // kiem tra hmi
+		HAL_TIM_Base_Start_IT(&htim6); // kiem tra hmi
 		HAL_TIM_Base_Start_IT(&htim7); // kiem tra trang thai x, y, z
 		Set_Speed_Motor_x( speed_default, speed_x_max);
 		Set_Speed_Motor_y( speed_default, speed_y_max);
@@ -101,6 +102,16 @@ void task_timer7(){
 	Control_motor_y();
 	Control_motor_x();
 	Control_motor_z();
+}
+
+
+void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
+{
+	if(htim == &htim6){
+		task_timer6();
+	}else if(htim == &htim7){
+		 task_timer7();
+	}
 }
 
 
