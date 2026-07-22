@@ -170,6 +170,7 @@ void Handle_output(void){
 }
 
 void Handle_homeprocess(void){
+	Motor_control->bits.Home_process = 0 ;
 	if((AxisX.mode == STOP) &&(AxisY.mode == STOP) && (AxisZ.mode == STOP)){
 		Input_indicator->bits.motor_state = NOT_YET;
 		Input_indicator->bits.home_state = NOT_YET;
