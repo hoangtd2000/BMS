@@ -80,12 +80,6 @@ void application_run_main(void){
 //		}
 //	}
 
-	if((AxisX.mode == STOP) &&(AxisY.mode == STOP) && (AxisZ.mode == STOP)){
-		Input_indicator->bits.motor_state = DONE ;
-	}else{
-		Input_indicator->bits.motor_state = NOT_YET ;
-	}
-
 	if((AxisX.current_pos == 0 ) && (AxisY.current_pos == 0) && (AxisZ.current_pos == 0)){
 	Input_indicator->bits.home_state  = DONE ;
 	}else{
@@ -102,6 +96,11 @@ void task_timer7(){
 	Control_motor_y();
 	Control_motor_x();
 	Control_motor_z();
+	if((AxisX.mode == STOP) &&(AxisY.mode == STOP) && (AxisZ.mode == STOP)){
+		Input_indicator->bits.motor_state = DONE ;
+	}else{
+		Input_indicator->bits.motor_state = NOT_YET ;
+	}
 }
 
 
